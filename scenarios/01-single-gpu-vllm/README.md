@@ -5,6 +5,8 @@ its memory needs by hand, then prove the prediction with `nvidia-smi` and a load
 
 ![Architecture](architecture-diagram.png)
 
+> Prefer clicking to typing? Follow **[CONSOLE.md](CONSOLE.md)** for the same lab in the AWS Console.
+
 | | |
 | --- | --- |
 | Instance | EC2 g6.xlarge: 1 × NVIDIA L4 24 GB, 4 vCPU, 16 GB RAM |

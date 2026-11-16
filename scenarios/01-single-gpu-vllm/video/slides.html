@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Scenario 1 Intro Slides</title>
+<style>
+  :root{
+    --bg:#0A0F1E; --panel:#111a2f; --panel2:#16213b; --line:#2a3858;
+    --ink:#E8ECF4; --muted:#93A0B8; --cyan:#22D3EE; --aws:#FF9900; --nv:#76B900; --violet:#A78BFA; --pink:#F472B6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#000;font-family:Inter, "DejaVu Sans", sans-serif;color:var(--ink)}
+  .slide{width:1920px;height:1080px;position:relative;overflow:hidden;
+    background:radial-gradient(1200px 700px at 85% -10%, rgba(34,211,238,.10), transparent 60%),
+               radial-gradient(900px 600px at -10% 110%, rgba(167,139,250,.10), transparent 60%), var(--bg);
+    padding:96px 110px; margin-bottom:20px}
+  .brand{position:absolute;left:110px;bottom:48px;font-size:22px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+  .brand b{color:var(--cyan);font-weight:700}
+  .pageno{position:absolute;right:110px;bottom:48px;font-size:22px;color:var(--muted)}
+  .kicker{font-size:26px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-weight:700;margin-bottom:22px}
+  h1{font-size:96px;line-height:1.05;font-weight:800;letter-spacing:-.02em}
+  h2{font-size:64px;line-height:1.1;font-weight:800;letter-spacing:-.01em;margin-bottom:18px}
+  .sub{font-size:32px;color:var(--muted);line-height:1.4}
+  .grad{background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:22px;padding:34px 36px}
+  .tag{display:inline-block;font-size:20px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:8px 16px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+
+  /* title */
+  .title-wrap{position:absolute;left:110px;top:250px;right:110px}
+  .chips{display:flex;gap:16px;margin-top:56px}
+  .chip{font-size:26px;padding:14px 26px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+  .chip.aws{border-color:rgba(255,153,0,.5);color:#FFC266}
+  .chip.nv{border-color:rgba(118,185,0,.5);color:#B5E36A}
+  .chip.cy{border-color:rgba(34,211,238,.5);color:#8BEAF7}
+  .ep{position:absolute;right:110px;top:96px;font-size:28px;color:var(--muted)}
+  .ep b{color:var(--ink)}
+
+  /* summary */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:44px}
+  .grid3 .card h3{font-size:22px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .grid3 .card p{font-size:34px;font-weight:700;line-height:1.25}
+  .grid3 .card small{display:block;font-size:24px;color:var(--muted);font-weight:400;margin-top:10px;line-height:1.35}
+  .goal{font-size:38px;line-height:1.35;max-width:1500px}
+  .goal b{color:var(--cyan)}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(6,1fr);gap:22px;margin-top:80px;position:relative}
+  .steps:before{content:"";position:absolute;left:60px;right:60px;top:44px;height:3px;background:linear-gradient(90deg,var(--cyan),var(--violet))}
+  .step{position:relative}
+  .dot{width:88px;height:88px;border-radius:50%;background:var(--bg);border:3px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:800;position:relative;z-index:1}
+  .step:last-child .dot{border-color:var(--pink)}
+  .step h4{font-size:34px;margin:30px 0 12px}
+  .step p{font-size:24px;color:var(--muted);line-height:1.4}
+
+  /* sizing */
+  .calc{display:grid;grid-template-columns:1.15fr 1fr;gap:40px;margin-top:40px}
+  .eq{font-size:30px;line-height:1.5;margin-bottom:26px}
+  .eq .k{color:var(--muted);font-size:22px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+  .eq b{color:var(--cyan)}
+  .bar{height:96px;border-radius:16px;overflow:hidden;display:flex;border:1px solid var(--line);margin:18px 0 10px}
+  .bar div{display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#06101f}
+  .legend{font-size:22px;color:var(--muted)}
+  .barlabel{font-size:24px;font-weight:700;margin-top:26px}
+
+  /* glossary */
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:40px}
+  .gloss .card{padding:32px 36px;min-height:300px}
+  .gloss h3{font-size:40px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:16px}
+  .gloss h3 span.ico{width:52px;height:52px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#06101f}
+  .gloss p{font-size:27px;line-height:1.42;color:#CDD5E3}
+  .gloss .here{margin-top:14px;font-size:22px;color:var(--cyan);font-weight:600}
+
+  /* cost */
+  table{width:100%;border-collapse:collapse;margin-top:36px;font-size:30px}
+  td,th{padding:22px 24px;border-bottom:1px solid var(--line);text-align:left}
+  th{font-size:20px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  td.r,th.r{text-align:right}
+  tr.total td{font-weight:800;color:var(--cyan);border-bottom:none;font-size:36px}
+  .guard{display:flex;gap:18px;margin-top:40px}
+  .note{font-size:22px;color:var(--muted);margin-top:22px}
+
+  /* roadmap */
+  .road{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:56px}
+  .road .card{padding:26px 28px;opacity:.55}
+  .road .card.on{opacity:1;border-color:var(--cyan);box-shadow:0 0 0 2px rgba(34,211,238,.35) inset}
+  .road .n{font-size:22px;color:var(--muted);font-weight:700}
+  .road .t{font-size:28px;font-weight:700;margin-top:8px;line-height:1.25}
+</style>
+</head>
+<body>
+
+<!-- 1 TITLE -->
+<section class="slide" id="s-title">
+  <div class="ep">Episode <b>1</b> of 8</div>
+  <div class="title-wrap">
+    <div class="kicker">AI Infrastructure, Hands-On</div>
+    <h1>How much GPU do you<br><span class="grad">really need</span> to run an LLM?</h1>
+    <p class="sub" style="margin-top:34px;max-width:1400px">Serving Llama 3.1 8B on a single cloud GPU with vLLM, sized by hand and proven with benchmarks.</p>
+    <div class="chips">
+      <span class="chip aws">AWS EC2 g6.xlarge</span>
+      <span class="chip nv">NVIDIA L4 · 24 GB</span>
+      <span class="chip cy">vLLM</span>
+      <span class="chip">Llama 3.1 8B Instruct</span>
+    </div>
+  </div>
+  <div class="brand"><b>■</b> AI Infra Series</div>
+</section>
+
+<!-- 2 SUMMARY -->
+<section class="slide" id="s-summary">
+  <div class="kicker">The plan</div>
+  <h2>What we're deploying today</h2>
+  <p class="goal">Run an open large language model on <b>one cloud GPU</b>, predict how much GPU memory it needs, then <b>prove it</b> with real measurements and a real bill.</p>
+  <div class="grid3">
+    <div class="card"><h3>Model</h3><p>Llama 3.1 8B Instruct</p><small>Open-weights chat model from Meta, 8 billion parameters</small></div>
+    <div class="card"><h3>Hardware</h3><p>EC2 g6.xlarge</p><small>1 × NVIDIA L4 GPU with 24 GB memory, 4 vCPUs, 16 GB RAM</small></div>
+    <div class="card"><h3>Software</h3><p>vLLM on Docker</p><small>Deep Learning AMI with NVIDIA drivers and CUDA pre-installed</small></div>
+    <div class="card"><h3>Test</h3><p>1, 8 and 32 users</p><small>Full 16-bit model vs. 4-bit quantized model</small></div>
+    <div class="card"><h3>We measure</h3><p>Speed and cost</p><small>Tokens per second, response time, dollars per million tokens</small></div>
+    <div class="card"><h3>Budget</h3><p>≈ $5 to $15</p><small>Everything is deleted the same day</small></div>
+  </div>
+  <div class="brand"><b>■</b> AI Infra Series</div><div class="pageno">Episode 1</div>
+</section>
+
+<!-- 3 ARCHITECTURE (animated by data-step) -->
+<section class="slide" id="s-arch" data-step="5" style="padding:0">
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" font-family="Inter, DejaVu Sans, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#93A0B8"/></marker>
+    <marker id="arc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#22D3EE"/></marker>
+    <marker id="arv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#A78BFA"/></marker>
+  </defs>
+  <text x="96" y="104" font-size="24" font-weight="700" letter-spacing="3" fill="#22D3EE">ARCHITECTURE</text>
+  <text x="96" y="160" font-size="50" font-weight="800" fill="#E8ECF4">One GPU, one model, one API</text>
+  <g class="cap">
+    <rect x="1210" y="80" width="614" height="84" rx="42" fill="#16213b" stroke="#2a3858"/>
+    <text id="capnum" x="1250" y="131" font-size="22" font-weight="700" fill="#22D3EE">STEP 5 OF 5</text>
+    <text id="captxt" x="1410" y="131" font-size="24" font-weight="600" fill="#E8ECF4">Measure and stay on budget</text>
+  </g>
+
+  <!-- step 1: cloud, vpc, ec2, gpu, laptop -->
+  <g class="s1">
+    <rect x="470" y="220" width="1030" height="790" rx="22" fill="rgba(255,153,0,0.035)" stroke="#FF9900" stroke-width="2" stroke-dasharray="10 8"/>
+    <text x="500" y="262" font-size="24" font-weight="700" fill="#FFB84D">AWS Cloud · us-east-1</text>
+    <rect x="505" y="285" width="650" height="700" rx="18" fill="none" stroke="#3a4a6e" stroke-width="2"/>
+    <text x="530" y="322" font-size="21" fill="#93A0B8">VPC · public subnet · security group (no open ports)</text>
+    <rect x="545" y="345" width="570" height="450" rx="18" fill="#111a2f" stroke="#22D3EE" stroke-width="2.5"/>
+    <text x="575" y="392" font-size="30" font-weight="800" fill="#E8ECF4">EC2 g6.xlarge</text>
+    <text x="1085" y="392" font-size="21" text-anchor="end" fill="#93A0B8">4 vCPU · 16 GB RAM</text>
+    <rect x="575" y="700" width="510" height="66" rx="12" fill="rgba(118,185,0,0.16)" stroke="#76B900" stroke-width="2"/>
+    <text x="830" y="742" font-size="25" font-weight="700" text-anchor="middle" fill="#C9F08A">NVIDIA L4 GPU · 24 GB VRAM</text>
+
+    <rect x="96" y="400" width="300" height="130" rx="18" fill="#111a2f" stroke="#3a4a6e" stroke-width="2"/>
+    <text x="246" y="455" font-size="28" font-weight="700" text-anchor="middle" fill="#E8ECF4">Your laptop</text>
+    <text x="246" y="492" font-size="20" text-anchor="middle" fill="#93A0B8">AWS CLI · Session Manager</text>
+    <path d="M396 425 H543" stroke="#93A0B8" stroke-width="2.5" fill="none" marker-end="url(#ar)"/>
+    <text x="406" y="412" font-size="18" fill="#93A0B8">secure shell</text>
+  </g>
+
+  <!-- step 2: software stack -->
+  <g class="s2">
+    <rect x="575" y="420" width="510" height="78" rx="12" fill="rgba(34,211,238,0.14)" stroke="#22D3EE" stroke-width="2"/>
+    <text x="830" y="455" font-size="26" font-weight="800" text-anchor="middle" fill="#E8ECF4">vLLM server · port 8000</text>
+    <text x="830" y="484" font-size="20" text-anchor="middle" fill="#8BEAF7">Llama 3.1 8B Instruct</text>
+    <rect x="575" y="514" width="510" height="78" rx="12" fill="#16213b" stroke="#3a4a6e" stroke-width="2"/>
+    <text x="830" y="561" font-size="24" font-weight="600" text-anchor="middle" fill="#E8ECF4">Docker + NVIDIA Container Toolkit</text>
+    <rect x="575" y="608" width="510" height="78" rx="12" fill="#16213b" stroke="#3a4a6e" stroke-width="2"/>
+    <text x="830" y="655" font-size="24" font-weight="600" text-anchor="middle" fill="#E8ECF4">NVIDIA driver + CUDA (Deep Learning AMI)</text>
+  </g>
+
+  <!-- step 3: weights -->
+  <g class="s3">
+    <rect x="545" y="830" width="570" height="120" rx="18" fill="#111a2f" stroke="#A78BFA" stroke-width="2.5"/>
+    <text x="830" y="880" font-size="28" font-weight="700" text-anchor="middle" fill="#E8ECF4">EBS gp3 disk · 100 GB</text>
+    <text x="830" y="917" font-size="21" text-anchor="middle" fill="#C4B5FD">Model weights cached here (≈ 16 GB)</text>
+    <path d="M830 828 V770" stroke="#A78BFA" stroke-width="2.5" fill="none" marker-end="url(#arv)"/>
+    <text x="842" y="819" font-size="18" fill="#C4B5FD">load into GPU</text>
+    <rect x="1555" y="830" width="280" height="120" rx="18" fill="#111a2f" stroke="#A78BFA" stroke-width="2"/>
+    <text x="1695" y="880" font-size="26" font-weight="700" text-anchor="middle" fill="#E8ECF4">Hugging Face Hub</text>
+    <text x="1695" y="915" font-size="20" text-anchor="middle" fill="#93A0B8">Open model weights</text>
+    <path d="M1553 890 H1117" stroke="#A78BFA" stroke-width="2.5" fill="none" marker-end="url(#arv)" stroke-dasharray="10 6"/>
+    <text x="1335" y="874" font-size="18" text-anchor="middle" fill="#C4B5FD">one-time download</text>
+    <line x1="1335" y1="893" x2="1335" y2="980" stroke="none"/>
+  </g>
+
+  <!-- step 4: client -->
+  <g class="s4">
+    <rect x="96" y="610" width="300" height="130" rx="18" fill="#111a2f" stroke="#22D3EE" stroke-width="2"/>
+    <text x="246" y="665" font-size="28" font-weight="700" text-anchor="middle" fill="#E8ECF4">Benchmark client</text>
+    <text x="246" y="702" font-size="20" text-anchor="middle" fill="#93A0B8">1, 8, 32 users at once</text>
+    <path d="M396 675 H525 V470 H573" stroke="#22D3EE" stroke-width="2.5" fill="none" marker-end="url(#arc)"/>
+    <text x="246" y="578" font-size="18" text-anchor="middle" fill="#8BEAF7">OpenAI-compatible</text>
+    <text x="246" y="600" font-size="18" text-anchor="middle" fill="#8BEAF7">API requests ↓ to vLLM</text>
+  </g>
+
+  <!-- step 5: guardrails -->
+  <g class="s5">
+    <text x="1195" y="322" font-size="21" fill="#93A0B8">Managed services</text>
+    <rect x="1195" y="345" width="270" height="105" rx="16" fill="#111a2f" stroke="#3a4a6e" stroke-width="2"/>
+    <text x="1330" y="390" font-size="25" font-weight="700" text-anchor="middle" fill="#E8ECF4">Amazon S3</text>
+    <text x="1330" y="422" font-size="19" text-anchor="middle" fill="#93A0B8">Benchmark results</text>
+    <rect x="1195" y="470" width="270" height="105" rx="16" fill="#111a2f" stroke="#3a4a6e" stroke-width="2"/>
+    <text x="1330" y="515" font-size="25" font-weight="700" text-anchor="middle" fill="#E8ECF4">CloudWatch</text>
+    <text x="1330" y="547" font-size="19" text-anchor="middle" fill="#93A0B8">GPU and instance metrics</text>
+    <rect x="1195" y="595" width="270" height="105" rx="16" fill="rgba(244,114,182,0.08)" stroke="#F472B6" stroke-width="2"/>
+    <text x="1330" y="640" font-size="25" font-weight="700" text-anchor="middle" fill="#E8ECF4">AWS Budgets</text>
+    <text x="1330" y="672" font-size="19" text-anchor="middle" fill="#F9A8D4">Email alert at $20</text>
+    <rect x="1195" y="720" width="270" height="90" rx="16" fill="#111a2f" stroke="#3a4a6e" stroke-width="2"/>
+    <text x="1330" y="760" font-size="25" font-weight="700" text-anchor="middle" fill="#E8ECF4">IAM role</text>
+    <text x="1330" y="789" font-size="19" text-anchor="middle" fill="#93A0B8">Least-privilege access</text>
+    <path d="M1117 397 H1193" stroke="#93A0B8" stroke-width="2.5" fill="none" marker-end="url(#ar)"/>
+    <path d="M1117 522 H1193" stroke="#93A0B8" stroke-width="2.5" fill="none" marker-end="url(#ar)"/>
+  </g>
+</svg>
+</section>
+
+<!-- 4 STEPS -->
+<section class="slide" id="s-steps">
+  <div class="kicker">The build</div>
+  <h2>Six steps, start to teardown</h2>
+  <div class="steps">
+    <div class="step"><div class="dot">1</div><h4>Prepare</h4><p>Request GPU quota, set a budget alert, get a Hugging Face access token</p></div>
+    <div class="step"><div class="dot">2</div><h4>Launch</h4><p>Start a g6.xlarge with the Deep Learning AMI and a 100 GB disk</p></div>
+    <div class="step"><div class="dot">3</div><h4>Serve</h4><p>Run vLLM in Docker and load Llama 3.1 8B onto the GPU</p></div>
+    <div class="step"><div class="dot">4</div><h4>Test</h4><p>Ask the model a question through its OpenAI-compatible API</p></div>
+    <div class="step"><div class="dot">5</div><h4>Benchmark</h4><p>Load-test with 1, 8, 32 users; compare 16-bit vs. 4-bit</p></div>
+    <div class="step"><div class="dot">6</div><h4>Tear down</h4><p>Terminate everything and confirm nothing is still billing</p></div>
+  </div>
+  <div class="brand"><b>■</b> AI Infra Series</div><div class="pageno">Episode 1</div>
+</section>
+
+<!-- 5 SIZING -->
+<section class="slide" id="s-sizing">
+  <div class="kicker">Sizing on a napkin</div>
+  <h2>Will an 8B model fit in 24 GB?</h2>
+  <div class="calc">
+    <div>
+      <div class="eq"><span class="k">1 · Model weights</span>8 billion parameters × 2 bytes (16-bit) = <b>≈ 16 GB</b></div>
+      <div class="eq"><span class="k">2 · Memory per token (KV cache)</span>2 × 32 layers × 8 heads × 128 × 2 bytes = <b>128 KB</b><br>→ one 8,000-token conversation ≈ <b>1 GB</b></div>
+      <div class="eq"><span class="k">3 · What's left</span>21.6 GB usable − 16 GB weights − 1.5 GB overhead ≈ <b>4 GB</b><br>→ about <b>4 long conversations</b> at once, many more short ones</div>
+    </div>
+    <div class="card">
+      <div class="barlabel">16-bit model on NVIDIA L4 (24 GB)</div>
+      <div class="bar">
+        <div style="width:66.7%;background:#22D3EE">Weights 16 GB</div>
+        <div style="width:6.3%;background:#93A0B8"></div>
+        <div style="width:17%;background:#A78BFA">KV ≈ 4</div>
+        <div style="width:10%;background:#2a3858;color:#93A0B8">spare</div>
+      </div>
+      <div class="barlabel">4-bit quantized model</div>
+      <div class="bar">
+        <div style="width:22%;background:#22D3EE">≈ 5 GB</div>
+        <div style="width:6.3%;background:#93A0B8"></div>
+        <div style="width:61.7%;background:#A78BFA">KV cache ≈ 15 GB</div>
+        <div style="width:10%;background:#2a3858;color:#93A0B8">spare</div>
+      </div>
+      <div class="legend" style="margin-top:20px"><span style="color:#22D3EE">■ weights</span> &nbsp; <span style="color:#93A0B8">■ overhead</span> &nbsp; <span style="color:#A78BFA">■ room for users</span> &nbsp; ■ held back</div>
+      <p class="note" style="font-size:24px;margin-top:30px">Prediction: it fits, but tightly. 4-bit gives ≈ 4× more room for users. We'll check both with nvidia-smi and a load test.</p>
+    </div>
+  </div>
+  <div class="brand"><b>■</b> AI Infra Series</div><div class="pageno">Episode 1</div>
+</section>
+
+<!-- 6 GLOSSARY A -->
+<section class="slide" id="s-g1">
+  <div class="kicker">AI terms, in plain English · 1 of 4</div>
+  <h2>The basics</h2>
+  <div class="gloss">
+    <div class="card"><h3><span class="ico" style="background:#22D3EE">Aa</span>LLM</h3><p>Large Language Model. An AI trained on huge amounts of text to predict the next word. ChatGPT and Llama are LLMs.</p><div class="here">Today: Llama 3.1 8B Instruct</div></div>
+    <div class="card"><h3><span class="ico" style="background:#A78BFA">#</span>Parameters</h3><p>The numbers a model learned during training: its "knowledge". "8B" means 8 billion of them. More usually means smarter, but bigger.</p><div class="here">Today: 8 billion × 2 bytes ≈ 16 GB</div></div>
+    <div class="card"><h3><span class="ico" style="background:#76B900">G</span>GPU</h3><p>A chip with thousands of small cores that do math in parallel. AI models are mostly huge multiplications, so GPUs run them far faster than CPUs.</p><div class="here">Today: NVIDIA L4</div></div>
+    <div class="card"><h3><span class="ico" style="background:#F472B6">M</span>VRAM</h3><p>The GPU's own built-in memory. The whole model has to fit here to run fast, which is why GPU memory size matters so much.</p><div class="here">Today: 24 GB</div></div>
+  </div>
+  <div class="brand"><b>■</b> AI Infra Series</div><div class="pageno">Episode 1</div>
+</section>
+
+<!-- 7 GLOSSARY B -->
+<section class="slide" id="s-g2">
+  <div class="kicker">AI terms, in plain English · 2 of 4</div>
+  <h2>Running a model</h2>
+  <div class="gloss">
+    <div class="card"><h3><span class="ico" style="background:#22D3EE">▶</span>Inference</h3><p>Using a trained model to answer a question. Training teaches the model; inference is the model doing its job. This video is all inference.</p><div class="here">Today: serving answers through an API</div></div>
+    <div class="card"><h3><span class="ico" style="background:#A78BFA">T</span>Token</h3><p>A chunk of text, roughly three-quarters of a word. Models read and write tokens, and speed and price are measured in them.</p><div class="here">Today: we count tokens per second</div></div>
+    <div class="card"><h3><span class="ico" style="background:#76B900">⟷</span>Context window</h3><p>How much text the model can look at in one go, your prompt plus its answer, measured in tokens.</p><div class="here">Today: we cap it at 8,000 tokens</div></div>
+    <div class="card"><h3><span class="ico" style="background:#F472B6">K</span>KV cache</h3><p>The model's short-term memory for each conversation, so it doesn't re-read everything for every new word. It lives in VRAM and grows as the chat gets longer.</p><div class="here">Today: ≈ 128 KB per token</div></div>
+  </div>
+  <div class="brand"><b>■</b> AI Infra Series</div><div class="pageno">Episode 1</div>
+</section>
+
+<!-- 8 GLOSSARY C -->
+<section class="slide" id="s-g3">
+  <div class="kicker">AI terms, in plain English · 3 of 4</div>
+  <h2>Making it fast and cheap</h2>
+  <div class="gloss">
+    <div class="card"><h3><span class="ico" style="background:#22D3EE">v</span>vLLM</h3><p>Free, open-source software that serves LLMs. It packs many users' requests onto one GPU efficiently and speaks the same API format as OpenAI.</p><div class="here">Today: our model server</div></div>
+    <div class="card"><h3><span class="ico" style="background:#A78BFA">4</span>Quantization</h3><p>Storing each parameter with fewer bits, for example 4 instead of 16. The model gets about 4× smaller and faster, with a small loss in quality.</p><div class="here">Today: 16-bit vs. 4-bit (AWQ)</div></div>
+    <div class="card"><h3><span class="ico" style="background:#76B900">⏱</span>Throughput vs. latency</h3><p>Throughput: total words per second across all users. Latency: how long one person waits. Serving more users at once raises throughput but adds some wait.</p><div class="here">Today: we measure both</div></div>
+    <div class="card"><h3><span class="ico" style="background:#F472B6">$</span>On-demand vs. Spot</h3><p>On-demand: pay by the second, never interrupted. Spot: AWS's spare capacity, often 50 to 70% cheaper, but it can be taken back with 2 minutes' notice.</p><div class="here">Today: on-demand, for a stable recording</div></div>
+  </div>
+  <div class="brand"><b>■</b> AI Infra Series</div><div class="pageno">Episode 1</div>
+</section>
+
+<!-- 9 GLOSSARY D -->
+<section class="slide" id="s-g4">
+  <div class="kicker">Cloud terms, in plain English · 4 of 4</div>
+  <h2>The cloud pieces</h2>
+  <div class="gloss">
+    <div class="card"><h3><span class="ico" style="background:#FF9900">E</span>EC2 instance type</h3><p>A rented virtual machine in a preset size. The name tells you the family and size: "g6" is AWS's GPU family, "xlarge" the size.</p><div class="here">Today: g6.xlarge = 4 vCPU, 16 GB RAM, 1 L4</div></div>
+    <div class="card"><h3><span class="ico" style="background:#22D3EE">A</span>Deep Learning AMI</h3><p>A ready-made machine image from AWS with NVIDIA drivers, CUDA and Docker already installed, so you skip hours of setup.</p><div class="here">Today: our starting image</div></div>
+    <div class="card"><h3><span class="ico" style="background:#A78BFA">D</span>EBS volume</h3><p>A network-attached disk for your virtual machine. It keeps files like downloaded model weights between restarts.</p><div class="here">Today: 100 GB gp3</div></div>
+    <div class="card"><h3><span class="ico" style="background:#F472B6">Q</span>Service quota</h3><p>AWS's per-account safety limit. New accounts often start at zero GPU capacity, so you ask AWS for an increase before you can launch.</p><div class="here">Today: "Running On-Demand G and VT instances"</div></div>
+  </div>
+  <div class="brand"><b>■</b> AI Infra Series</div><div class="pageno">Episode 1</div>
+</section>
+
+<!-- 10 COST -->
+<section class="slide" id="s-cost">
+  <div class="kicker">What it costs</div>
+  <h2>The whole episode costs less than lunch</h2>
+  <table>
+    <tr><th>Item</th><th>Rate (approx., us-east-1)</th><th class="r">For this build</th></tr>
+    <tr><td>EC2 g6.xlarge, on-demand</td><td>≈ $0.80 per hour</td><td class="r">≈ $5 (6 hours)</td></tr>
+    <tr><td>EBS gp3, 100 GB</td><td>≈ $8 per month, billed hourly</td><td class="r">&lt; $1</td></tr>
+    <tr><td>S3, CloudWatch, data transfer</td><td>Pennies at this scale</td><td class="r">&lt; $1</td></tr>
+    <tr class="total"><td>Total, including a rehearsal run</td><td></td><td class="r">≈ $5 to $15</td></tr>
+  </table>
+  <div class="guard">
+    <span class="chip">Budget alert at $20</span><span class="chip">Every resource tagged</span><span class="chip">Terminated the same day</span>
+  </div>
+  <p class="note">Prices change. Check the AWS pricing page before you start. The same build works on Azure GPU VMs or GPU clouds like RunPod.</p>
+  <div class="brand"><b>■</b> AI Infra Series</div><div class="pageno">Episode 1</div>
+</section>
+
+<!-- 11 NEXT -->
+<section class="slide" id="s-next">
+  <div class="kicker">Where this fits</div>
+  <h1 style="font-size:84px">Let's <span class="grad">build it.</span></h1>
+  <p class="sub" style="margin-top:20px">Episode 1 of an 8-part series, from one GPU to a production AI platform.</p>
+  <div class="road">
+    <div class="card on"><div class="n">01 · TODAY</div><div class="t">One GPU: serve and size an LLM</div></div>
+    <div class="card"><div class="n">02</div><div class="t">Multi-GPU training on one machine</div></div>
+    <div class="card"><div class="n">03</div><div class="t">Storage for training and inference</div></div>
+    <div class="card"><div class="n">04</div><div class="t">Kubernetes with GPU nodes</div></div>
+    <div class="card"><div class="n">05</div><div class="t">Autoscaling model serving</div></div>
+    <div class="card"><div class="n">06</div><div class="t">Distributed training with Ray and Kubeflow</div></div>
+    <div class="card"><div class="n">07</div><div class="t">Reference architecture: a RAG platform</div></div>
+    <div class="card"><div class="n">08</div><div class="t">Managed AI platforms vs. DIY</div></div>
+  </div>
+  <div class="brand"><b>■</b> AI Infra Series</div><div class="pageno">Episode 1</div>
+</section>
+
+<script>
+  const caps = {1:"Launch one GPU instance",2:"Install the serving stack",3:"Download the model weights",4:"Send requests and benchmark",5:"Measure and stay on budget"};
+  window.setStep = n => {
+    const s = document.getElementById('s-arch');
+    for (let i=1;i<=5;i++) s.querySelectorAll('.s'+i).forEach(g => g.style.opacity = i<=n ? 1 : 0);
+    document.getElementById('capnum').textContent = `STEP ${n} OF 5`;
+    document.getElementById('captxt').textContent = caps[n];
+  };
+  setStep(5);
+</script>
+</body>
+</html>

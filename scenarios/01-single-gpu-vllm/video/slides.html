@@ -101,6 +101,7 @@
       <span class="chip nv">NVIDIA L4 · 24 GB</span>
       <span class="chip cy">vLLM</span>
       <span class="chip">Llama 3.1 8B Instruct</span>
+      <span class="chip">Built in the AWS Console</span>
     </div>
   </div>
   <div class="brand"><b>■</b> AI Infra Series</div>
@@ -114,7 +115,7 @@
   <div class="grid3">
     <div class="card"><h3>Model</h3><p>Llama 3.1 8B Instruct</p><small>Open-weights chat model from Meta, 8 billion parameters</small></div>
     <div class="card"><h3>Hardware</h3><p>EC2 g6.xlarge</p><small>1 × NVIDIA L4 GPU with 24 GB memory, 4 vCPUs, 16 GB RAM</small></div>
-    <div class="card"><h3>Software</h3><p>vLLM on Docker</p><small>Deep Learning AMI with NVIDIA drivers and CUDA pre-installed</small></div>
+    <div class="card"><h3>Software</h3><p>vLLM on Docker</p><small>Deep Learning AMI, launched and managed from the AWS Console</small></div>
     <div class="card"><h3>Test</h3><p>1, 8 and 32 users</p><small>Full 16-bit model vs. 4-bit quantized model</small></div>
     <div class="card"><h3>We measure</h3><p>Speed and cost</p><small>Tokens per second, response time, dollars per million tokens</small></div>
     <div class="card"><h3>Budget</h3><p>≈ $5 to $15</p><small>Everything is deleted the same day</small></div>
@@ -151,10 +152,10 @@
     <text x="830" y="742" font-size="25" font-weight="700" text-anchor="middle" fill="#C9F08A">NVIDIA L4 GPU · 24 GB VRAM</text>
 
     <rect x="96" y="400" width="300" height="130" rx="18" fill="#111a2f" stroke="#3a4a6e" stroke-width="2"/>
-    <text x="246" y="455" font-size="28" font-weight="700" text-anchor="middle" fill="#E8ECF4">Your laptop</text>
-    <text x="246" y="492" font-size="20" text-anchor="middle" fill="#93A0B8">AWS CLI · Session Manager</text>
+    <text x="246" y="455" font-size="28" font-weight="700" text-anchor="middle" fill="#E8ECF4">Your browser</text>
+    <text x="246" y="492" font-size="20" text-anchor="middle" fill="#93A0B8">Console · Session Manager</text>
     <path d="M396 425 H543" stroke="#93A0B8" stroke-width="2.5" fill="none" marker-end="url(#ar)"/>
-    <text x="406" y="412" font-size="18" fill="#93A0B8">secure shell</text>
+    <text x="406" y="412" font-size="18" fill="#93A0B8">browser shell</text>
   </g>
 
   <!-- step 2: software stack -->
@@ -186,8 +187,8 @@
   <!-- step 4: client -->
   <g class="s4">
     <rect x="96" y="610" width="300" height="130" rx="18" fill="#111a2f" stroke="#22D3EE" stroke-width="2"/>
-    <text x="246" y="665" font-size="28" font-weight="700" text-anchor="middle" fill="#E8ECF4">Benchmark client</text>
-    <text x="246" y="702" font-size="20" text-anchor="middle" fill="#93A0B8">1, 8, 32 users at once</text>
+    <text x="246" y="665" font-size="28" font-weight="700" text-anchor="middle" fill="#E8ECF4">Load test</text>
+    <text x="246" y="702" font-size="20" text-anchor="middle" fill="#93A0B8">vllm bench · 1, 8, 32 users</text>
     <path d="M396 675 H525 V470 H573" stroke="#22D3EE" stroke-width="2.5" fill="none" marker-end="url(#arc)"/>
     <text x="246" y="578" font-size="18" text-anchor="middle" fill="#8BEAF7">OpenAI-compatible</text>
     <text x="246" y="600" font-size="18" text-anchor="middle" fill="#8BEAF7">API requests ↓ to vLLM</text>
@@ -217,14 +218,14 @@
 <!-- 4 STEPS -->
 <section class="slide" id="s-steps">
   <div class="kicker">The build</div>
-  <h2>Six steps, start to teardown</h2>
+  <h2>Six steps, all from the AWS Console</h2>
   <div class="steps">
-    <div class="step"><div class="dot">1</div><h4>Prepare</h4><p>Request GPU quota, set a budget alert, get a Hugging Face access token</p></div>
-    <div class="step"><div class="dot">2</div><h4>Launch</h4><p>Start a g6.xlarge with the Deep Learning AMI and a 100 GB disk</p></div>
-    <div class="step"><div class="dot">3</div><h4>Serve</h4><p>Run vLLM in Docker and load Llama 3.1 8B onto the GPU</p></div>
+    <div class="step"><div class="dot">1</div><h4>Prepare</h4><p>GPU quota, budget alert and an IAM role in the AWS Console; a Hugging Face token</p></div>
+    <div class="step"><div class="dot">2</div><h4>Launch</h4><p>EC2 Launch Instance wizard: g6.xlarge, Deep Learning AMI, 100 GB disk</p></div>
+    <div class="step"><div class="dot">3</div><h4>Serve</h4><p>Connect with Session Manager in the browser, then start vLLM in Docker</p></div>
     <div class="step"><div class="dot">4</div><h4>Test</h4><p>Ask the model a question through its OpenAI-compatible API</p></div>
     <div class="step"><div class="dot">5</div><h4>Benchmark</h4><p>Load-test with 1, 8, 32 users; compare 16-bit vs. 4-bit</p></div>
-    <div class="step"><div class="dot">6</div><h4>Tear down</h4><p>Terminate everything and confirm nothing is still billing</p></div>
+    <div class="step"><div class="dot">6</div><h4>Tear down</h4><p>Terminate in the EC2 console and confirm nothing is still billing</p></div>
   </div>
   <div class="brand"><b>■</b> AI Infra Series</div><div class="pageno">Episode 1</div>
 </section>

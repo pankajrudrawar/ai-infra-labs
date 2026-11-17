@@ -1,0 +1,8 @@
+# Copy to terraform.tfvars (git-ignored) and fill in.
+subscription_id = "00000000-0000-0000-0000-000000000000"
+prefix          = "hp-aicache-<your-initials>"
+ssh_public_key  = "ssh-ed25519 AAAA... you@laptop"
+
+# Lab defaults: one Balanced_B3 cache with HA, ready to join a geo-replication group.
+# Geo-replication step: enable_geo_replication = true (adds the West US 3 cache and links it).
+# Production design: sku_name = "Balanced_B20", enable_geo_replication = true.

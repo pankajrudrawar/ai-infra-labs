@@ -5,3 +5,11 @@ video/frames/
 *.mp4
 __pycache__/
 .DS_Store
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+.terraform.lock.hcl
+crash.log

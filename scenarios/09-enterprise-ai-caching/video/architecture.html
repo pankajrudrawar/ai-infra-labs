@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Scenario 09 Architecture</title>
+<style>
+  body{margin:0;background:#0A0F1E}
+  svg{display:block}
+  text{font-family:Inter,"DejaVu Sans",sans-serif;fill:#E8ECF4}
+  .muted{fill:#93A0B8}
+  .h1{font-size:40px;font-weight:800}
+  .h2{font-size:26px;font-weight:800}
+  .h3{font-size:20px;font-weight:700}
+  .b{font-size:17px}
+  .s{font-size:15px}
+  .k{font-size:15px;font-weight:700;letter-spacing:.12em}
+</style>
+</head>
+<body>
+<svg id="diagram" width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="glow1" cx="85%" cy="0%" r="60%"><stop offset="0" stop-color="#22D3EE" stop-opacity=".12"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glow2" cx="0%" cy="100%" r="60%"><stop offset="0" stop-color="#A78BFA" stop-opacity=".12"/><stop offset="1" stop-color="#A78BFA" stop-opacity="0"/></radialGradient>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#93A0B8"/></marker>
+    <marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#22D3EE"/></marker>
+    <marker id="ahp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#F472B6"/></marker>
+  </defs>
+  <rect width="1920" height="1080" fill="#0A0F1E"/>
+  <rect width="1920" height="1080" fill="url(#glow1)"/>
+  <rect width="1920" height="1080" fill="url(#glow2)"/>
+
+  <!-- title -->
+  <text x="60" y="70" class="h1">Enterprise caching layer for AI workloads</text>
+  <text x="60" y="106" class="b muted">Harbor &amp; Pine Outfitters (fictional) · Azure Managed Redis + Google Cloud Memorystore for Valkey · Terraform + GitHub Actions</text>
+
+  <!-- users -->
+  <rect x="720" y="132" width="480" height="64" rx="32" fill="#16213b" stroke="#2a3858"/>
+  <text x="960" y="171" class="h3" text-anchor="middle">4M monthly shoppers · web, app, agents</text>
+  <path d="M800,196 C700,230 520,226 470,250" stroke="#93A0B8" stroke-width="2.5" fill="none" marker-end="url(#ah)"/>
+  <path d="M1120,196 C1220,230 1400,226 1450,250" stroke="#93A0B8" stroke-width="2.5" fill="none" marker-end="url(#ah)"/>
+
+  <!-- ===================== AZURE ===================== -->
+  <rect x="40" y="254" width="900" height="610" rx="24" fill="#0f1830" stroke="#0078D4" stroke-opacity=".7" stroke-width="2"/>
+  <text x="70" y="294" class="k" fill="#4FA3F7" style="fill:#4FA3F7">MICROSOFT AZURE</text>
+  <text x="70" y="324" class="h2">Customer-support copilot</text>
+
+  <!-- region East US 2 -->
+  <rect x="64" y="344" width="410" height="400" rx="18" fill="#111a2f" stroke="#2a3858" stroke-dasharray="6 6"/>
+  <text x="84" y="374" class="k muted">EAST US 2 · PRIMARY</text>
+  <rect x="88" y="392" width="362" height="70" rx="14" fill="#16213b" stroke="#2a3858"/>
+  <text x="108" y="422" class="h3">Support assistant API</text>
+  <text x="108" y="446" class="s muted">AKS · managed identity (Entra ID)</text>
+  <path d="M269,462 L269,506" stroke="#22D3EE" stroke-width="3" marker-end="url(#ahc)"/>
+  <text x="280" y="489" class="s" style="fill:#8BEAF7">TLS :10000 via private endpoint</text>
+  <rect x="88" y="510" width="362" height="150" rx="14" fill="#0b2a3a" stroke="#22D3EE" stroke-width="2"/>
+  <text x="108" y="540" class="h3">Azure Managed Redis</text>
+  <text x="108" y="563" class="s muted">Balanced B20 · 24 GB · HA (2 zones)</text>
+  <text x="108" y="590" class="b">• semantic LLM cache (RediSearch)</text>
+  <text x="108" y="614" class="b">• chat memory · token budgets</text>
+  <text x="108" y="638" class="s muted">Enterprise cluster · NoEviction + TTLs</text>
+  <rect x="88" y="676" width="362" height="52" rx="12" fill="#16213b" stroke="#2a3858"/>
+  <text x="108" y="708" class="b">Azure OpenAI · only on cache miss</text>
+
+  <!-- region West US 3 -->
+  <rect x="506" y="344" width="410" height="400" rx="18" fill="#111a2f" stroke="#2a3858" stroke-dasharray="6 6"/>
+  <text x="526" y="374" class="k muted">WEST US 3 · ACTIVE</text>
+  <rect x="530" y="392" width="362" height="70" rx="14" fill="#16213b" stroke="#2a3858"/>
+  <text x="550" y="422" class="h3">Support assistant API</text>
+  <text x="550" y="446" class="s muted">AKS · same code, same config</text>
+  <path d="M711,462 L711,506" stroke="#22D3EE" stroke-width="3" marker-end="url(#ahc)"/>
+  <rect x="530" y="510" width="362" height="150" rx="14" fill="#0b2a3a" stroke="#22D3EE" stroke-width="2"/>
+  <text x="550" y="540" class="h3">Azure Managed Redis</text>
+  <text x="550" y="563" class="s muted">Balanced B20 · 24 GB · HA (2 zones)</text>
+  <text x="550" y="590" class="b">• same data, writable here too</text>
+  <text x="550" y="614" class="b">• serves West Coast in &lt; 1 ms</text>
+  <text x="550" y="638" class="s muted">conflict-free (CRDT) merge</text>
+  <rect x="530" y="676" width="362" height="52" rx="12" fill="#16213b" stroke="#2a3858"/>
+  <text x="550" y="708" class="b">Azure OpenAI · only on cache miss</text>
+
+  <path d="M452,585 L526,585" stroke="#F472B6" stroke-width="3.5" marker-start="url(#ahp)" marker-end="url(#ahp)"/>
+  <text x="489" y="574" class="s" text-anchor="middle" style="fill:#F9A8D4">active-</text>
+  <text x="489" y="610" class="s" text-anchor="middle" style="fill:#F9A8D4">active</text>
+
+  <text x="70" y="784" class="b muted">Security: public access off · Entra ID only (no keys) · TLS · private DNS</text>
+  <text x="70" y="812" class="b muted">Ops: Azure Monitor alerts on memory %, server load, cache hit ratio</text>
+  <text x="70" y="840" class="b muted">≈ $1,840 / month for the pair (2 × B20 with HA, East US 2 list price)</text>
+
+  <!-- ===================== GOOGLE CLOUD ===================== -->
+  <rect x="980" y="254" width="900" height="610" rx="24" fill="#0f1830" stroke="#34A853" stroke-opacity=".7" stroke-width="2"/>
+  <text x="1010" y="294" class="k" style="fill:#6FD08C">GOOGLE CLOUD</text>
+  <text x="1010" y="324" class="h2">Recommendations + product Q&amp;A</text>
+
+  <!-- region us-central1 -->
+  <rect x="1004" y="344" width="410" height="400" rx="18" fill="#111a2f" stroke="#2a3858" stroke-dasharray="6 6"/>
+  <text x="1024" y="374" class="k muted">US-CENTRAL1 · PRIMARY</text>
+  <rect x="1028" y="392" width="362" height="70" rx="14" fill="#16213b" stroke="#2a3858"/>
+  <text x="1048" y="422" class="h3">Recs + Q&amp;A API</text>
+  <text x="1048" y="446" class="s muted">GKE · service account (IAM auth)</text>
+  <path d="M1209,462 L1209,506" stroke="#22D3EE" stroke-width="3" marker-end="url(#ahc)"/>
+  <text x="1220" y="490" class="s" style="fill:#8BEAF7">TLS :6379 via PSC endpoint</text>
+  <rect x="1028" y="510" width="362" height="150" rx="14" fill="#0b2a3a" stroke="#22D3EE" stroke-width="2"/>
+  <text x="1048" y="540" class="h3">Memorystore for Valkey</text>
+  <text x="1048" y="563" class="s muted">3 shards × highmem-medium + 1 replica each</text>
+  <text x="1048" y="590" class="b">• online features (20M customers)</text>
+  <text x="1048" y="614" class="b">• semantic cache (vector search)</text>
+  <text x="1048" y="638" class="s muted">cluster mode · multi-zone · volatile-lru</text>
+  <rect x="1028" y="676" width="362" height="52" rx="12" fill="#16213b" stroke="#2a3858"/>
+  <text x="1048" y="700" class="b">Vertex AI (Gemini) on miss</text>
+  <text x="1048" y="720" class="s muted">BigQuery → Dataflow refreshes features</text>
+
+  <!-- region us-east4 -->
+  <rect x="1446" y="344" width="410" height="400" rx="18" fill="#111a2f" stroke="#2a3858" stroke-dasharray="6 6"/>
+  <text x="1466" y="374" class="k muted">US-EAST4 · STANDBY</text>
+  <rect x="1470" y="392" width="362" height="70" rx="14" fill="#16213b" stroke="#2a3858"/>
+  <text x="1490" y="422" class="h3">Recs API (reads)</text>
+  <text x="1490" y="446" class="s muted">GKE · scaled down until failover</text>
+  <path d="M1651,462 L1651,506" stroke="#22D3EE" stroke-width="3" marker-end="url(#ahc)"/>
+  <rect x="1470" y="510" width="362" height="150" rx="14" fill="#0b2a3a" stroke="#22D3EE" stroke-width="2"/>
+  <text x="1490" y="540" class="h3">Memorystore secondary</text>
+  <text x="1490" y="563" class="s muted">same shape · read-only</text>
+  <text x="1490" y="590" class="b">• warm copy for disaster recovery</text>
+  <text x="1490" y="614" class="b">• promote to primary in minutes</text>
+  <text x="1490" y="638" class="s muted">asynchronous replication</text>
+  <rect x="1470" y="676" width="362" height="52" rx="12" fill="#16213b" stroke="#2a3858"/>
+  <text x="1490" y="708" class="b">Vertex AI · regional endpoint</text>
+
+  <path d="M1392,585 L1464,585" stroke="#F472B6" stroke-width="3.5" marker-end="url(#ahp)"/>
+  <text x="1429" y="574" class="s" text-anchor="middle" style="fill:#F9A8D4">one-</text>
+  <text x="1429" y="610" class="s" text-anchor="middle" style="fill:#F9A8D4">way</text>
+
+  <text x="1010" y="784" class="b muted">Security: PSC only, no public IP · IAM auth (no passwords) · TLS · CMEK option</text>
+  <text x="1010" y="812" class="b muted">Ops: Cloud Monitoring alerts on memory %, CPU, replication lag</text>
+  <text x="1010" y="840" class="b muted">≈ $1,700 / month (12 nodes × $0.19/h, us-central1 list price) + transfer</text>
+
+  <!-- ===================== AUTOMATION ===================== -->
+  <rect x="40" y="890" width="1840" height="140" rx="24" fill="#111a2f" stroke="#2a3858"/>
+  <text x="70" y="930" class="k" style="fill:#22D3EE">AUTOMATION · SAME PIPELINE FOR BOTH CLOUDS</text>
+  <g>
+    <rect x="70" y="950" width="250" height="56" rx="12" fill="#16213b" stroke="#2a3858"/><text x="195" y="985" class="b" text-anchor="middle">Pull request</text>
+    <path d="M320,978 L370,978" stroke="#93A0B8" stroke-width="2.5" marker-end="url(#ah)"/>
+    <rect x="372" y="950" width="420" height="56" rx="12" fill="#16213b" stroke="#2a3858"/><text x="582" y="985" class="b" text-anchor="middle">GitHub Actions: fmt · validate · tflint · Checkov</text>
+    <path d="M792,978 L842,978" stroke="#93A0B8" stroke-width="2.5" marker-end="url(#ah)"/>
+    <rect x="844" y="950" width="330" height="56" rx="12" fill="#16213b" stroke="#2a3858"/><text x="1009" y="985" class="b" text-anchor="middle">terraform plan (OIDC, no keys)</text>
+    <path d="M1174,978 L1224,978" stroke="#93A0B8" stroke-width="2.5" marker-end="url(#ah)"/>
+    <rect x="1226" y="950" width="300" height="56" rx="12" fill="#16213b" stroke="#F472B6"/><text x="1376" y="985" class="b" text-anchor="middle">human approval → apply</text>
+    <path d="M1526,978 L1576,978" stroke="#93A0B8" stroke-width="2.5" marker-end="url(#ah)"/>
+    <rect x="1578" y="950" width="280" height="56" rx="12" fill="#16213b" stroke="#2a3858"/><text x="1718" y="985" class="b" text-anchor="middle">azurerm + google</text>
+  </g>
+</svg>
+</body>
+</html>

@@ -1,0 +1,58 @@
+# Customer questions for the fictional retailer Harbor & Pine Outfitters.
+# Each block is one intent written several ways (real users paraphrase).
+# Lines starting with "!" are traps: they look similar to the block above but need a
+# DIFFERENT answer. A good threshold serves paraphrases and refuses traps.
+
+What is your return policy?
+How do returns work?
+Can I send back something I bought?
+how many days do i have to return an item
+What's the return window?
+! Can I return a tent I already used on a camping trip?
+
+How long does standard shipping take?
+When will my order arrive with normal shipping?
+standard delivery time?
+How many days for regular shipping?
+! How long does express shipping take?
+
+Do you ship to Canada?
+Can I order from Canada?
+Is international shipping available to Canada?
+! Do you ship to Mexico?
+
+How do I choose the right size hiking boot?
+What size hiking boots should I buy?
+hiking boot sizing guide
+Do hiking boots run small?
+
+Is the Ridgeline 2 tent waterproof?
+Will the Ridgeline 2 tent keep me dry in rain?
+Ridgeline 2 rain protection?
+! Is the Ridgeline 4 tent waterproof?
+
+How do I wash a down jacket?
+Can I put my down jacket in the washing machine?
+down jacket cleaning instructions
+How to clean a puffer jacket?
+
+What is the warranty on backpacks?
+Are backpacks covered by a guarantee?
+backpack warranty length
+If my backpack strap breaks, will you fix it?
+
+Do you price match?
+Will you match a lower price from another store?
+price match policy
+Can I get the difference if it's cheaper elsewhere?
+
+How do I reset my rewards account password?
+I forgot my rewards password
+rewards login help
+Can't sign in to my membership account
+
+Which sleeping bag is best for winter camping?
+Recommend a sleeping bag for below-freezing temperatures
+warmest sleeping bag you sell
+What sleeping bag rating do I need for snow camping?
+! Which sleeping bag is best for summer camping?

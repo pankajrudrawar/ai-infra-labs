@@ -1,0 +1,7 @@
+# Copy to terraform.tfvars (git-ignored) and fill in.
+project_id = "your-lab-project-id"
+
+# Lab defaults: 1 shard of SHARED_CORE_NANO, no replicas, no cross-region secondary.
+# Cross-region step: enable_cross_region = true
+# Production design: node_type = "HIGHMEM_MEDIUM", shard_count = 3, replica_count = 1,
+#                    enable_cross_region = true, deletion_protection = true

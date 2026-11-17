@@ -19,6 +19,15 @@ Each scenario is a working lab plus a YouTube episode and a Medium post.
 | 07 | Reference architecture: an end-to-end RAG platform | Planned |
 | 08 | Managed platforms vs. DIY (SageMaker, Bedrock, Azure, GPU clouds) | Planned |
 
+### Enterprise track
+
+Real-life designs on more than one cloud: business story, architecture, sizing, HA/DR,
+security, cost, a portal walkthrough, and Terraform + CI automation.
+
+| # | Scenario | Status |
+| --- | --- | --- |
+| 09 | [Enterprise caching layer for AI: Azure Managed Redis + Google Memorystore for Valkey](scenarios/09-enterprise-ai-caching/) | Lab written, not yet run |
+
 ## Layout
 
 ```
@@ -27,10 +36,13 @@ scenarios/NN-name/
   scripts/         numbered scripts, ending in a teardown
   sizing/          capacity math
   video/           slide source for the episode intro (render with Playwright + ffmpeg)
+  docs/            portal walkthroughs, video plan, blog outline (enterprise track)
+  terraform/       infrastructure as code, one folder per cloud (enterprise track)
 ```
 
 ## Ground rules
 
-- One AWS account used only for these labs, with a monthly budget alert.
-- Every resource is tagged `project=ai-infra-series` and `scenario=NN`.
+- One AWS account (and, for the enterprise track, one Azure subscription and one Google Cloud
+  project) used only for these labs, each with a monthly budget alert.
+- Every resource is tagged (or labeled) `project=ai-infra-series` and `scenario=NN`.
 - Never commit keys, tokens or account IDs.

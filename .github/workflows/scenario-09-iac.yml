@@ -1,0 +1,127 @@
+# CI for Scenario 09 (enterprise AI caching).
+#
+# Runs on every pull request that touches the scenario: format, validate and lint the
+# Terraform for both clouds, scan it for security misconfigurations, and check the Python.
+#
+# "plan" is manual (Actions tab > Scenario 09 IaC > Run workflow) and only previews changes.
+# Nothing in this workflow creates or deletes cloud resources. It needs these repository
+# secrets/variables, set up with OpenID Connect so no long-lived keys are stored:
+#   Azure : AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID
+#   Google: GCP_WORKLOAD_IDENTITY_PROVIDER, GCP_SERVICE_ACCOUNT, GCP_PROJECT_ID
+name: Scenario 09 IaC
+
+on:
+  pull_request:
+    paths:
+      - "scenarios/09-enterprise-ai-caching/**"
+      - ".github/workflows/scenario-09-iac.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scenarios/09-enterprise-ai-caching/**"
+  workflow_dispatch:
+    inputs:
+      cloud:
+        description: "Which cloud to plan"
+        type: choice
+        options: [azure, gcp]
+        default: azure
+
+permissions:
+  contents: read
+
+env:
+  SCENARIO: scenarios/09-enterprise-ai-caching
+
+jobs:
+  terraform-checks:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cloud: [azure, gcp]
+    defaults:
+      run:
+        working-directory: ${{ env.SCENARIO }}/terraform/${{ matrix.cloud }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.16.7"
+      - name: Format
+        run: terraform fmt -check -recursive -diff
+      - name: Init (no backend, no credentials)
+        run: terraform init -backend=false -input=false
+      - name: Validate
+        run: terraform validate -no-color
+      - uses: terraform-linters/setup-tflint@v4
+      - name: Lint
+        run: |
+          tflint --init
+          tflint --format compact
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkov (report only)
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: ${{ env.SCENARIO }}/terraform
+          framework: terraform
+          soft_fail: true # lab defaults (no HA, no deletion protection) are flagged on purpose
+
+  python-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install ruff
+      - name: Lint
+        run: ruff check --select E,F,W,B --ignore E501 ${{ env.SCENARIO }}/app ${{ env.SCENARIO }}/sizing
+      - name: Sizing script runs
+        run: python ${{ env.SCENARIO }}/sizing/cache_sizing.py
+
+  plan:
+    if: github.event_name == 'workflow_dispatch'
+    needs: terraform-checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # OpenID Connect sign-in to Azure / Google, no stored keys
+    defaults:
+      run:
+        working-directory: ${{ env.SCENARIO }}/terraform/${{ inputs.cloud }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.16.7"
+      - if: inputs.cloud == 'azure'
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - if: inputs.cloud == 'gcp'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+      - name: Plan
+        env:
+          ARM_USE_OIDC: "true"
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
+          TF_VAR_create_test_vm: "false"
+        run: |
+          terraform init -input=false
+          terraform plan -input=false -no-color | tee plan.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: plan-${{ inputs.cloud }}
+          path: ${{ env.SCENARIO }}/terraform/${{ inputs.cloud }}/plan.txt
